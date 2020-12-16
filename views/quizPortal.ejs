@@ -109,6 +109,7 @@
                     <!-- Tabs nav -->
                     <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist"
                         aria-orientation="vertical">
+
                         <% for(let i=0; i<quizQuestions[0].questions.length; i++){ %>
                         <a class="nav-link mb-3 p-3 shadow <%= i==0&&"active"%> " data-toggle="pill"
                             href="#<%= quizQuestions[0].questions[i].question.replace(/\s/g,'') %>" role="tab"
