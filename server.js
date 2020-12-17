@@ -1,5 +1,5 @@
 const express = require("express");
-const PORT = 11000 || process.env.PORT;
+const PORT = 11069 || process.env.PORT;
 const path = require("path");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
@@ -643,27 +643,31 @@ app.post("/questionSubmit", async function (req, res) {
         question_type,
     } = req.body;
     let questions = [];
+    let num1 = 0;
+    let num2 = 0;
     for (let i = 0; i < question_type.length; i++) {
         if (question_type[i] === "MCQ") {
             questions.push({
-                question: mcqQues_name[i],
+                question: mcqQues_name[num1],
                 options: [
-                    mcq_opt_a[i],
-                    mcq_opt_b[i],
-                    mcq_opt_c[i],
-                    mcq_opt_d[i],
+                    mcq_opt_a[num1],
+                    mcq_opt_b[num1],
+                    mcq_opt_c[num1],
+                    mcq_opt_d[num1],
                 ],
-                answer: mcq_ans[i],
+                answer: mcq_ans[num1],
                 type: "MCQ",
             });
+            num1 += 1;
+        } else if (question_type[i] === "LA") {
+            questions.push({
+                question: laQues_name[num2],
+                type: "LA",
+            });
+            num2 += 1;
         }
     }
-    for (let x = 0; x < laQues_name.length; x++) {
-        questions.push({
-            question: laQues_name[x],
-            type: "LA",
-        });
-    }
+
     console.log(req.body);
     console.log(questions);
 
