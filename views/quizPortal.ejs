@@ -88,13 +88,8 @@
             width: 100% !important;
         }
     </style>
-    <script>
-        document.addEventListener('visibilitychange', function () {
-            document.title = document.visibilityState;
-            console.log(document.visibilityState);
-        });
 
-    </script>
+
 </head>
 
 <body>
@@ -190,8 +185,30 @@
 
     </script>
     <script>
+        let domain = $("#domain-input").val();
+        let count = 0;
+        document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === "hidden") {
+                count += 1
+                window.alert("Switching tabs is not permitted. The test will get submitted automatically. All your responses will be nullified. ")
+            }
+            if (count > 3) {
+                $.ajax({
+                    type: "POST",
+                    url: `/quizPortal/${domain}`,
+                    data: { answers: [{ question: "Malpractice", answer: "Malpractice" }] },
+                    success: function (data) {
+                        window.location.replace("/thanks");
+
+                    },
+
+                });
+                window.location.replace("/thanks");
+            }
+        });
+
         $.post("/getUserData", function (data) {
-            let domain = $("#domain-input").val();
+            domain = $("#domain-input").val();
             if (data != "null") {
                 let user = JSON.parse(data);
                 let startDate;
