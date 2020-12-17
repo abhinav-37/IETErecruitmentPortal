@@ -18,7 +18,7 @@
     <!-- Style Sheet -->
     <link rel="stylesheet" href="/css/homeStyles.css" />
 
-    <title>Quiz Portl</title>
+    <title>Quiz Portal</title>
     <style>
         .nav-pills-custom .nav-link {
             color: #aaa;
@@ -88,7 +88,13 @@
             width: 100% !important;
         }
     </style>
+    <script>
+        document.addEventListener('visibilitychange', function () {
+            document.title = document.visibilityState;
+            console.log(document.visibilityState);
+        });
 
+    </script>
 </head>
 
 <body>
