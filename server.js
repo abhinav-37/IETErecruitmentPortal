@@ -654,14 +654,15 @@ app.post("/questionSubmit", async function (req, res) {
                     mcq_opt_d[i],
                 ],
                 answer: mcq_ans[i],
-                type: question_type[i],
-            });
-        } else {
-            questions.push({
-                question: laQues_name[i + 1 - mcqQues_name.length],
-                type: question_type[i],
+                type: "MCQ",
             });
         }
+    }
+    for (let x = 0; x < laQues_name.length; x++) {
+        questions.push({
+            question: laQues_name[x],
+            type: "LA",
+        });
     }
     console.log(req.body);
     console.log(questions);
