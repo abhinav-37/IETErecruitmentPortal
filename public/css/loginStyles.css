@@ -1,6 +1,6 @@
 body {
     background-color: #213159;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 /*NAVBAR STYLES*/
@@ -91,7 +91,7 @@ nav .navbar-nav li a {
     color: #e7e7e7;
     text-align: center;
     font-size: 30px;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: 500;
 }
 
@@ -175,15 +175,15 @@ nav .navbar-nav li a {
 }
 
 @font-face {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     src: url("../fonts/muli/Muli-Regular.ttf");
 }
 @font-face {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     src: url("../fonts/muli/Roboto.ttf");
 }
 @font-face {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     src: url("../fonts/muli/Roboto.ttf");
 }
 * {
@@ -193,7 +193,7 @@ nav .navbar-nav li a {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     color: #fff;
     font-size: 13px;
     margin: 0;
@@ -202,8 +202,8 @@ body {
 input,
 textarea,
 select,
-button {
-    font-family: 'Roboto', sans-serif;
+.button {
+    font-family: "Roboto", sans-serif;
     color: #333;
     font-size: 13px;
 }
@@ -258,7 +258,7 @@ a:hover {
 .inner h3 {
     text-transform: uppercase;
     font-size: 22px;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     text-align: center;
     margin-bottom: 32px;
     color: #fff;
@@ -298,7 +298,7 @@ form {
     height: 40px;
     padding: 0 20px;
     border-radius: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     background-color: #091a4600;
 }
 .form-control:focus {
@@ -315,7 +315,7 @@ select option[value=""][disabled] {
     display: none;
 }
 
-button {
+.button {
     border: none;
     width: 500px;
     height: 40px;
@@ -330,13 +330,13 @@ button {
     font-size: 13px;
     color: #213159;
     text-transform: uppercase;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     position: relative;
 }
-button:before {
+.button:before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -357,7 +357,7 @@ button:before {
     -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
 }
-button:hover:before {
+.button:hover:before {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
     -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
@@ -390,7 +390,7 @@ button:hover:before {
     border-radius: 2px;
     background-color: #ebebeb;
     border: 1px solid #ccc;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     color: #fff;
     font-size: 10px;
     font-weight: bolder;
@@ -460,28 +460,27 @@ input:not(:-ms-input-placeholder) + span {
     opacity: 1;
     transform: scale(0.75) translateY(-100%) translateX(-30px);
 }
-<style>
+
 a:link {
-  color: green;
-  background-color: transparent;
-  text-decoration: none;
+    color: green;
+    background-color: transparent;
+    text-decoration: none;
 }
 
 a:visited {
-  color: #fff;
-  background-color: transparent;
-  text-decoration: none;
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
 }
 
 a:hover {
-  color: steelblue;
-  background-color: transparent;
-  text-decoration: underline;
+    color: steelblue;
+    background-color: transparent;
+    text-decoration: underline;
 }
 
 a:active {
-  color: yellow;
-  background-color: transparent;
-  text-decoration: underline;
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
 }
-</style>

@@ -88,6 +88,7 @@
             width: 100% !important;
         }
     </style>
+
 </head>
 
 <body>
@@ -98,7 +99,8 @@
     <section class="py-5 header">
         <div class="container py-4">
             <header class="text-center mb-5 pb-5 text-white">
-                <h1 class="display-4">IETE recruitment exam <span id="domain-info"><%= domain %> </span>Domain</h1>
+                <h1 class="display-4">IETE Recruitment Exam <span style="text-transform: uppercase;"
+                        id="domain-info"><%= domain %> </span>Domain</h1>
                 <h6 class="time">Time Remaining: </h6>
                 <h6 class="time special" id="timeRemaining"></h6>
                 <h6 class="time">Minutes</h6>
@@ -131,14 +133,16 @@
                         <% quizQuestions[0].questions.forEach(function(q){ %>
                         <div class="tab-pane fade shadow rounded bg-white show <%= j==0 && "active"  %>  p-5"
                             id="<%= q.question.replace(/\s/g,'') %>" role="tabpanel">
-                            <h4 class="font-italic mb-4">Q. <%= q.question %> </h4>
+                            <pre style="font-weight: bold; font-size:20px"
+                                class="font-italic mb-4">Q. <%- q.question %> </pre>
                             <p class="font-italic text-muted mb-2">
                             <ul question="<%= q.question %> ">
                                 <div class="row">
                                     <% if(q.type === "MCQ"){ %>
                                     <% q.options.forEach(function(l){ %>
                                     <li class="col-lg-6" style="text-align: center;"> <button
-                                            class="option btn btn-primary"><%= l %> </button></li>
+                                            class="option btn btn-primary">
+                                            <pre style="color: white;"><%- l %></pre> </button></li>
                                     <% }) %>
                                     <button style="text-align: center;margin:auto"
                                         class=" toSave btn btn-success">Submit</button>
@@ -204,8 +208,8 @@
                             }
                             answers.push(answer);
 
-                            $(this).addClass("invisible")
-                            $(this).after(` <button class=" btn btn-success disabled">Submitted</button>`);
+                            $(this).css("display", "none")
+                            $(this).after(` <button class=" btn btn-success disabled mx-auto">Submitted</button>`);
 
                         })
                     });
@@ -270,6 +274,15 @@
             }
         })
     </script>
+
+    <script>
+        $(document).ready(function () {
+            $('pre').on("cut copy paste", function (e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+
 </body>
 
 </html>

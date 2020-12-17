@@ -1,5 +1,5 @@
 const express = require("express");
-const PORT = 11069 || process.env.PORT;
+const PORT = 11068 || process.env.PORT;
 const path = require("path");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
@@ -394,7 +394,7 @@ app.post("/quizPortal/:domain", async function (req, res) {
             if (quizAnswers) {
                 if (domain === "ece") {
                     let questions = await QuizEce.find();
-                    console.log(quizAnswers);
+
                     quizAnswers.forEach((f) => {
                         for (
                             let i = 0;
@@ -408,7 +408,6 @@ app.post("/quizPortal/:domain", async function (req, res) {
                                 e.question.replace(/\s/g, "")
                             ) {
                                 if (e.type === "MCQ") {
-                                    console.log("found mcqs");
                                     if (
                                         f.answer.replace(/\s/g, "") ===
                                         e.answer.replace(/\s/g, "")
@@ -449,7 +448,7 @@ app.post("/quizPortal/:domain", async function (req, res) {
                             }
                         }
                     });
-                    console.log(correctAnswers);
+
                     res.end(correctAnswers.length.toString());
                 } else if (domain === "design") {
                     let questions = await QuizDesign.find();
@@ -478,7 +477,7 @@ app.post("/quizPortal/:domain", async function (req, res) {
                             }
                         }
                     });
-                    console.log(correctAnswers);
+
                     res.end(correctAnswers.length.toString());
                 } else if (domain === "editorial") {
                     let questions = await QuizEditorial.find();
@@ -507,7 +506,7 @@ app.post("/quizPortal/:domain", async function (req, res) {
                             }
                         }
                     });
-                    console.log(correctAnswers);
+
                     res.end(correctAnswers.length.toString());
                 } else if (domain === "management") {
                     let questions = await QuizManagement.find();
@@ -536,7 +535,7 @@ app.post("/quizPortal/:domain", async function (req, res) {
                             }
                         }
                     });
-                    console.log(correctAnswers);
+
                     res.end(correctAnswers.length.toString());
                 } else if (domain === "photography") {
                     let questions = await QuizPhotography.find();
@@ -565,7 +564,6 @@ app.post("/quizPortal/:domain", async function (req, res) {
                             }
                         }
                     });
-                    console.log(correctAnswers);
                     res.end(correctAnswers.length.toString());
                 }
                 let correctToSubmit = {
@@ -598,15 +596,7 @@ app.post("/getUserData", async function (req, res) {
 });
 //=====================admin portal ============ //
 app.get("/admin", async function (req, res) {
-    if (!req.isAuthenticated()) {
-        if ("a" == "a") {
-            res.render("adminPanel/adminPanel");
-        } else {
-            res.redirect("/login/admin");
-        }
-    } else {
-        res.redirect("/login/admin");
-    }
+    res.render("adminPanel/adminPanel");
 });
 app.get("/admin/formQuiz", async function (req, res) {
     if (req.isAuthenticated()) {
@@ -667,9 +657,6 @@ app.post("/questionSubmit", async function (req, res) {
             num2 += 1;
         }
     }
-
-    console.log(req.body);
-    console.log(questions);
 
     if (domain === "ece") {
         let quizQuestions = new QuizEce({ questions });
