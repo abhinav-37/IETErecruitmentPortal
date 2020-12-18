@@ -60,11 +60,17 @@
                             <a style="color: black!important;" class="dropdown-item" href="/logout">Logout</a>
                         </div>
                     </li>
+                    <% if(!user.verified){ %>
+                    <li class="nav-item divider-vertical">
+                        <a class="nav-link" style="color: red;" href="/verificationPage">Verify</a>
+                    </li>
+                    <% } %>
                     <% }else{ %>
                     <li class="nav-item divider-vertical">
                         <a class="nav-link" href="/login/user">Login</a>
                     </li>
                     <% } %>
+
 
 
 

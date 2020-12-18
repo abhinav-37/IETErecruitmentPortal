@@ -86,6 +86,11 @@
 
         .btn-primary {
             width: 100% !important;
+
+        }
+
+        .btn-primary:focus {
+            background-color: teal;
         }
     </style>
 
@@ -98,7 +103,7 @@
     <!-- Demo header-->
     <!-- Demo header-->
     <section class="py-5 header">
-        <div class="container py-4">
+        <div class="container-fluid py-4">
             <header class="text-center mb-5 pb-5 text-white">
                 <h1 class="display-4">IETE Recruitment Exam <span style="text-transform: uppercase;"
                         id="domain-info"><%= domain %> </span>Domain</h1>
@@ -109,16 +114,16 @@
                     <button id="finalSubmit" class="btn btn-info">Submit Quiz</button>
                 </div>
             </header>
-
+            <input type="text" id="quiz_timing" style="display:none" value="<%= timings %>">
             <input id="domain-input" type="text" style="display: none;" value="<%= domain %>">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 col-lg-2">
                     <!-- Tabs nav -->
                     <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist"
                         aria-orientation="vertical">
 
                         <% for(let i=0; i<quizQuestions[0].questions.length; i++){ %>
-                        <a class="nav-link mb-3 p-3 shadow <%= i==0&&"active"%> " data-toggle="pill"
+                        <a class="nav-link mb-1 p-1 shadow <%= i==0&&"active"%> " data-toggle="pill"
                             href="#<%= quizQuestions[0].questions[i].question.replace(/\s/g,'') %>" role="tab"
                             aria-selected="true">
 
@@ -127,7 +132,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-9 col-lg-10">
                     <!-- Tabs content -->
                     <div class="tab-content" id="v-pills-tabContent">
                         <% let j=0 %>
@@ -213,10 +218,11 @@
                         startDate = new Date(e.startTime);
                     }
                 });
+                let quiz_timing = Number($("#quiz_timing").val())
                 let difference = Date.now() - startDate;
                 let remainingTime = Math.round((difference / 1000) / 60);
-                let timeLeftToFinish = 10 - remainingTime;
-                if (timeLeftToFinish <= 10 && timeLeftToFinish > 0) {
+                let timeLeftToFinish = quiz_timing - remainingTime;
+                if (timeLeftToFinish <= quiz_timing && timeLeftToFinish > 0) {
                     let answers = [];
                     $(".option").click(function () {
                         let selected = $(this).text()

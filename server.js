@@ -5,6 +5,7 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const { DateTime } = require("luxon");
 const nodemailer = require("nodemailer");
+const Utils = require("./models/utils");
 //auth
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -306,7 +307,7 @@ app.get("/logout", function (req, res) {
 });
 
 // ===================== get and post for quiz ================= //
-app.get("/instruction/:domain", function (req, res) {
+app.get("/instruction/:domain", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth && req.user.verified) {
         let num = 0;
@@ -316,9 +317,17 @@ app.get("/instruction/:domain", function (req, res) {
             }
         });
         if (num == 0) {
+            let utils = await Utils.find();
+            let timings = utils[0].timings[req.params.domain];
+            let totalQuestions = utils[0].totalQuestions[req.params.domain];
             let domain = req.params.domain;
             num = 0;
-            res.render("instructions", { domain, user: req.user });
+            res.render("instructions", {
+                domain,
+                user: req.user,
+                timings,
+                totalQuestions,
+            });
         } else {
             let message = encodeURIComponent("Already attempted!");
             num = 0;
@@ -328,6 +337,7 @@ app.get("/instruction/:domain", function (req, res) {
         res.redirect("/register/user");
     }
 });
+
 app.get("/quizPortal/:domain", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth && req.user.verified) {
@@ -354,25 +364,26 @@ app.get("/quizPortal/:domain", async function (req, res) {
                 tnum = 0;
             }
             let domain = req.params.domain;
+            let utils = await Utils.find();
+            let timings = utils[0].timings[domain];
             if (domain === "ece") {
                 let quizQuestions = await QuizEce.find();
-
-                res.render("quizPortal", { quizQuestions, domain });
+                res.render("quizPortal", { quizQuestions, domain, timings });
             } else if (domain === "cse") {
                 let quizQuestions = await QuizCse.find();
-                res.render("quizPortal", { quizQuestions, domain });
+                res.render("quizPortal", { quizQuestions, domain, timings });
             } else if (domain === "design") {
                 let quizQuestions = await QuizDesign.find();
-                res.render("quizPortal", { quizQuestions, domain });
+                res.render("quizPortal", { quizQuestions, domain, timings });
             } else if (domain === "editorial") {
                 let quizQuestions = await QuizEditorial.find();
-                res.render("quizPortal", { quizQuestions, domain });
+                res.render("quizPortal", { quizQuestions, domain, timings });
             } else if (domain === "management") {
                 let quizQuestions = await QuizManagement.find();
-                res.render("quizPortal", { quizQuestions, domain });
+                res.render("quizPortal", { quizQuestions, domain, timings });
             } else if (domain === "photography") {
                 let quizQuestions = await QuizPhotography.find();
-                res.render("quizPortal", { quizQuestions, domain });
+                res.render("quizPortal", { quizQuestions, domain, timings });
             } else {
                 let message = encodeURIComponent("Don't try to act smart!");
                 res.redirect("/?message=" + message);
