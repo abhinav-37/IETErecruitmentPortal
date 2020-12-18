@@ -334,7 +334,7 @@ app.get("/instruction/:domain", async function (req, res) {
             res.redirect("/?message=" + message);
         }
     } else {
-        res.redirect("/register/user");
+        res.redirect("/login/user");
     }
 });
 
@@ -394,7 +394,7 @@ app.get("/quizPortal/:domain", async function (req, res) {
             res.redirect("/?message=" + message);
         }
     } else {
-        res.redirect("/register/user");
+        res.redirect("/login/user");
     }
 });
 app.post("/quizPortal/:domain", async function (req, res) {
