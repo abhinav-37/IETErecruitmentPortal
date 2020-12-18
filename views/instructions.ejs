@@ -99,6 +99,14 @@
             var dialog = $(foo).dialog('open');
             setTimeout(function () { dialog.dialog('close'); }, time);
         </script>
+        <script>
+
+            if (window.screen.width < 770) {
+                window.alert("Please attempt on a laptop device!");
+                window.location.replace("/recruitments");
+            }
+
+        </script>
     </div>
     </div>
 </body>
