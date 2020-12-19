@@ -1,5 +1,5 @@
 const express = require("express");
-const PORT = 11069 || process.env.PORT;
+const PORT = 11070 || process.env.PORT;
 const path = require("path");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
@@ -19,6 +19,7 @@ const QuizEditorial = require("./models/quizEditorial");
 const QuizManagement = require("./models/quizManagement");
 const QuizPhotography = require("./models/quizPhotography");
 const QuizDesign = require("./models/quizDesign");
+const { env } = require("process");
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.use(
@@ -311,7 +312,7 @@ app.get("/instruction/:domain", async function (req, res) {
     let auth = req.isAuthenticated();
     if (auth && req.user.verified) {
         let num = 0;
-        req.user.correctAnswers.forEach(function (e) {
+        req.user.allAnswers.forEach(function (e) {
             if (e.domain === req.params.domain) {
                 num += 1;
             }
@@ -340,61 +341,94 @@ app.get("/instruction/:domain", async function (req, res) {
 
 app.get("/quizPortal/:domain", async function (req, res) {
     let auth = req.isAuthenticated();
-    if (auth && req.user.verified) {
-        let num = 0;
-        req.user.correctAnswers.forEach(function (e) {
-            if (e.domain === req.params.domain) {
-                num += 1;
-            }
-        });
-        if (num == 0) {
-            num = 0;
-            tnum = 0;
-            req.user.startTime.forEach(function (e) {
+    let startTime = Number(1608438600000);
+    let nowDate = Number(Date.now());
+    if (nowDate >= startTime) {
+        if (auth && req.user.verified) {
+            let num = 0;
+            req.user.correctAnswers.forEach(function (e) {
                 if (e.domain === req.params.domain) {
-                    tnum += 1;
+                    num += 1;
                 }
             });
-            if (tnum === 0) {
-                req.user.startTime.push({
-                    domain: req.params.domain,
-                    startTime: Date.now(),
-                });
-                req.user.save();
+            if (num == 0) {
+                num = 0;
                 tnum = 0;
-            }
-            let domain = req.params.domain;
-            let utils = await Utils.find();
-            let timings = utils[0].timings[domain];
-            if (domain === "ece") {
-                let quizQuestions = await QuizEce.find();
-                res.render("quizPortal", { quizQuestions, domain, timings });
-            } else if (domain === "cse") {
-                let quizQuestions = await QuizCse.find();
-                res.render("quizPortal", { quizQuestions, domain, timings });
-            } else if (domain === "design") {
-                let quizQuestions = await QuizDesign.find();
-                res.render("quizPortal", { quizQuestions, domain, timings });
-            } else if (domain === "editorial") {
-                let quizQuestions = await QuizEditorial.find();
-                res.render("quizPortal", { quizQuestions, domain, timings });
-            } else if (domain === "management") {
-                let quizQuestions = await QuizManagement.find();
-                res.render("quizPortal", { quizQuestions, domain, timings });
-            } else if (domain === "photography") {
-                let quizQuestions = await QuizPhotography.find();
-                res.render("quizPortal", { quizQuestions, domain, timings });
+                req.user.startTime.forEach(function (e) {
+                    if (e.domain === req.params.domain) {
+                        tnum += 1;
+                    }
+                });
+                if (tnum === 0) {
+                    req.user.startTime.push({
+                        domain: req.params.domain,
+                        startTime: Date.now(),
+                    });
+                    req.user.save();
+                    tnum = 0;
+                }
+                let domain = req.params.domain;
+                let utils = await Utils.find();
+                let timings = utils[0].timings[domain];
+                if (domain === "ece") {
+                    let quizQuestions = await QuizEce.find();
+                    res.render("quizPortal", {
+                        quizQuestions,
+                        domain,
+                        timings,
+                    });
+                } else if (domain === "cse") {
+                    let quizQuestions = await QuizCse.find();
+                    res.render("quizPortal", {
+                        quizQuestions,
+                        domain,
+                        timings,
+                    });
+                } else if (domain === "design") {
+                    let quizQuestions = await QuizDesign.find();
+                    res.render("quizPortal", {
+                        quizQuestions,
+                        domain,
+                        timings,
+                    });
+                } else if (domain === "editorial") {
+                    let quizQuestions = await QuizEditorial.find();
+                    res.render("quizPortal", {
+                        quizQuestions,
+                        domain,
+                        timings,
+                    });
+                } else if (domain === "management") {
+                    let quizQuestions = await QuizManagement.find();
+                    res.render("quizPortal", {
+                        quizQuestions,
+                        domain,
+                        timings,
+                    });
+                } else if (domain === "photography") {
+                    let quizQuestions = await QuizPhotography.find();
+                    res.render("quizPortal", {
+                        quizQuestions,
+                        domain,
+                        timings,
+                    });
+                } else {
+                    let message = encodeURIComponent("Don't try to act smart!");
+                    res.redirect("/?message=" + message);
+                }
             } else {
-                let message = encodeURIComponent("Don't try to act smart!");
+                num = 0;
+                let message = encodeURIComponent("All ready attempted!");
                 res.redirect("/?message=" + message);
             }
         } else {
-            num = 0;
-            let message = encodeURIComponent("All ready attempted!");
-            res.redirect("/?message=" + message);
+            res.redirect("/login/user");
         }
     } else {
-        res.redirect("/login/user");
+        let message = encodeURIComponent(
+            "The Recruitment Test will begin at 10am on 20th December 2020."
+        );
+        res.redirect("/?message=" + message);
     }
 });
 app.post("/quizPortal/:domain", async function (req, res) {
