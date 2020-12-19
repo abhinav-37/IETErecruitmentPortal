@@ -169,7 +169,9 @@ app.post("/register/:type", async function (req, res) {
     } = req.body;
     if (
         username.endsWith("2019@vitstudent.ac.in") ||
-        username.endsWith("2020@vitstudent.ac.in")
+        username.endsWith("2020@vitstudent.ac.in") ||
+        username.endsWith("rohan.mittal2018@vitstudent.ac.in") ||
+        username.endsWith("manan.agrawal2018@vitstudent.ac.in")
     ) {
         if (password === repassword) {
             User.register(
