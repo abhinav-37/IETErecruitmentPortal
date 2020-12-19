@@ -343,7 +343,7 @@ app.get("/quizPortal/:domain", async function (req, res) {
     let auth = req.isAuthenticated();
     let startTime = Number(1608438600000);
     let nowDate = Number(Date.now());
-    if (nowDate <= startTime) {
+    if (nowDate >= startTime) {
         if (auth && req.user.verified) {
             let num = 0;
             req.user.correctAnswers.forEach(function (e) {
