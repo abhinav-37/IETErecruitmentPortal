@@ -168,8 +168,8 @@ app.post("/register/:type", async function (req, res) {
         repassword,
     } = req.body;
     if (
-        ((user.includes("2019") || user.includes("2020")) &&
-            user.includes("vitstudent.ac.in")) ||
+        ((username.includes("2019") || user.includes("2020")) &&
+            username.includes("vitstudent.ac.in")) ||
         username.endsWith("rohan.mittal2018@vitstudent.ac.in") ||
         username.endsWith("manan.agrawal2018@vitstudent.ac.in")
     ) {
